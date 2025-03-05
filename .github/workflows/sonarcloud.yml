@@ -1,0 +1,28 @@
+name: SonarCloud Analysis
+
+on:
+  push:
+    branches:
+      - main  # Utilise la branche principale
+  pull_request:
+    branches:
+      - main  # Branche pour les PRs
+
+jobs:
+  sonarcloud:
+    name: Run SonarCloud analysis
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+
+      - name: SonarCloud Scan
+        uses: sonarsource/sonarcloud-github-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}  # Utilise ton token SonarCloud depuis les secrets GitHub
